@@ -1,0 +1,231 @@
+vue js
+
+[1] 시작
+1. chrome
+2. vscode
+3. node.js
+4. Vue.js devtools
+
+
+[2] 깃헙 리포제토리
+https://github.com/joshua1988/learn-vue-js
+
+[3] vue는 무엇인가?
+MVVM 패턴의 뷰모델 레이어에 해당하는 화면단 라이브러리
+
+
+기존웹
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        var div = document.querySelector('#app');       
+        var str = 'hello world';
+        div.innerHTML = str;    
+
+        str = 'hello world!!!';
+        div.innerHTML = str;
+        
+    </script>
+</body>
+</html>
+
+[4] Reactivity 구현
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        var div = document.querySelector('#app');
+        var viewModel = {};
+
+        // Object.defineProperty(대상 객체, 객체의 속성, {
+        //     // 정의할 내용
+        // })
+
+        Object.defineProperty(viewModel, 'str', {
+            //속성의 접근했을때 동작을 정의
+            get: function() {                
+                console.log('접근');
+            },
+            //속성의 값을 할당했을 때의 동작을 정의
+            set: function(newValue) {
+                console.log('할당', newValue);
+                div.innerHTML = newValue;
+            },
+        });
+    </script>
+</body>
+</html>
+
+데이터가 변했을때 자동으로 변하게 하는게 뷰의 핵심
+
+[5] 라이브러리화
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        var div = document.querySelector('#app');
+        var viewModel = {};
+
+        // Object.defineProperty(대상 객체, 객체의 속성, {
+        //     // 정의할 내용
+        // })
+
+        (function() {
+            function init() {
+                Object.defineProperty(viewModel, 'str', {
+                    //속성의 접근했을때 동작을 정의
+                    get: function () {
+                        console.log('접근');
+                    },
+                    //속성의 값을 할당했을 때의 동작을 정의
+                    set: function (newValue) {
+                        console.log('할당', newValue);
+                        render(newValue);
+                    },
+                });
+            }
+
+            function render(value) {
+                div.innerHTML = value;
+            }
+
+            init();
+        })();
+        
+       
+
+    </script>
+</body>
+</html>
+
+[6] 뷰 인스턴스
+
+인스턴스는 뷰로 개발할때 필수로 생성해야 하는 코드
+
+new Vue();
+
+var vm = new Vue();
+console.log(vm);
+
+
+function Vue() {
+    this.logText = function() {
+        console.log('hello');
+    }
+}
+var vm = new Vue();
+vm.logText();
+
+[7] 인스턴스 옵션
+
+  //var options = 
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'hi'
+        },
+        methods: {
+
+        },
+        created: function() {
+            
+        }
+    });      
+
+[8] 컴포넌트
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.Component('컴포넌트 이름', 컴포넌트 내용);
+        new Vue({
+            el: '#app',
+
+        });
+    </script>
+</body>
+</html>
+
+
+[9] 전역 컴포넌트 등록
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <app-header></app-header>
+        <app-content></app-content>        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.component('app-header', {
+            template: '<h1>Header</h1>'
+        });
+
+        Vue.component('app-content', {
+            template: '<div>content</div>'
+        });
+
+        new Vue({
+            el: '#app',
+
+        });
+    </script>
+</body>
+</html>
+
+[10] 지역 컴포넌트 등록
+
+
+
+
+
+
+
+
